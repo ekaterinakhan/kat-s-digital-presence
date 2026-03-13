@@ -3,7 +3,7 @@ import { Building2 } from "lucide-react";
 const companies = [
   {
     name: "Fanatics",
-    logo: "/logos/fanatics.png",
+    logo: "/fanatics.png",
     role: "Expansion / Commercial Operations",
     years: "2024 — Present",
     points: [
