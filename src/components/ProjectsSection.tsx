@@ -4,7 +4,8 @@ const projects = [
   {
     title: "LAMPA",
     role: "Co-founder",
-    description: "Coffee shop and educational space in Paris (17th arrondissement).",
+    description:
+      "Coffee shop and educational space in Paris (17th arrondissement).",
     link: "https://www.instagram.com/lampa.paris",
     linkLabel: "Instagram",
   },
@@ -12,15 +13,15 @@ const projects = [
     title: "Mentoring",
     role: "Mentor at Constructor University and privately",
     description:
-      "I mentor young professionals, managers, and founders. At Constructor University I helped the team of CellKinetica develop their financial model, pitch deck and strategy. The team won the main €100k prize at Demo Day.",
+      "Private mentoring for young professionals, managers and founders. At Constructor University I helped the team of CellKinetica develop their financial model, pitch deck and strategy. The team won the main €100k prize at Demo Day.",
     link: "https://www.linkedin.com/posts/konstantin-kostya-popadin-36104752_every-great-journey-starts-with-the-first-activity-7433229612027113472-n5Ps",
     linkLabel: "Reference",
   },
   {
     title: "Women in Tech — London",
-    role: "Conference track lead (Nov 2025 & June 2026)",
+    role: "Conference track lead (November 2025 and June 2026)",
     description:
-      "Responsible for speaker outreach, program structure, content planning, and final execution of the conference track.",
+      "Responsible for speaker outreach, program structure, content planning and final execution of the conference track.",
   },
 ];
 
