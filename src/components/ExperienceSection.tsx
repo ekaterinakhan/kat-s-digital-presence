@@ -14,7 +14,7 @@ const companies = [
   },
   {
     name: "Voggt",
-    logo: "/logos/voggt.png",
+    logo: "/voggt.png",
     role: "Commercial Operations / Marketplace Growth",
     years: "2022 — 2024",
     points: [
@@ -25,7 +25,7 @@ const companies = [
   },
   {
     name: "Bolt",
-    logo: "/logos/bolt.png",
+    logo: "/bolt.png",
     role: "Operations / Expansion",
     years: "2020 — 2021",
     points: [
@@ -36,7 +36,7 @@ const companies = [
   },
   {
     name: "ZenRooms / Rocket Internet",
-    logo: "/logos/zenrooms.png",
+    logo: "/rocketinternet.png",
     role: "Expansion / Operations",
     years: "2018 — 2020",
     points: [
@@ -47,7 +47,7 @@ const companies = [
   },
   {
     name: "Doc+",
-    logo: "/logos/docplus.png",
+    logo: "/docplus.png",
     role: "Business Development / Operations",
     years: "2017 — 2018",
     points: [
@@ -57,7 +57,7 @@ const companies = [
   },
   {
     name: "KPMG",
-    logo: "/logos/kpmg.png",
+    logo: "/kpmg.png",
     role: "Consultant",
     years: "2014 — 2016",
     points: [
