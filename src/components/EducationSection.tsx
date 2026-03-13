@@ -2,16 +2,22 @@ import { GraduationCap } from "lucide-react";
 
 const education = [
   {
-    logo: "/logos/gsom.png",
+    logo: "/GSOM_SPbU_logo.png",
     school: "GSOM SPbU",
     degree: "Master's degree in International Business",
     year: "2016",
   },
   {
-    logo: "/logos/cems.png",
+    logo: "/cems.png",
     school: "CEMS",
     degree: "Master's degree in Management",
     year: "2017",
+  },
+  {
+    logo: "/ACCA.png",
+    school: "ACCA",
+    degree: "In progress, 8/15 papers passed",
+    year: "2011 - present",
   },
 ];
 
