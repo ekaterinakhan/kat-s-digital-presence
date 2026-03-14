@@ -1,54 +1,50 @@
-import { GraduationCap } from "lucide-react";
-
 const education = [
   {
-    logo: "/GSOM_SPbU_logo.png",
-    school: "GSOM SPbU",
-    degree: "Master's degree in International Business",
-    year: "2016",
-  },
-  {
-    logo: "/cems.png",
-    school: "CEMS",
-    degree: "Master's degree in Management",
-    year: "2017",
-  },
-  {
-    logo: "/ACCA.png",
     school: "ACCA",
     degree: "In progress, 8/15 papers passed",
     year: "2011 - present",
+    url: "https://www.accaglobal.com/gb/en.html",
+  },
+  {
+    school: "CEMS",
+    degree: "Master's degree in Management",
+    year: "2017",
+    url: "https://cems.org/",
+  },
+  {
+    school: "GSOM SPbU",
+    degree: "Master's degree in International Business",
+    year: "2016",
+    url: "https://gsom.spbu.ru/",
   },
 ];
 
 const EducationSection = () => {
   return (
-    <section className="container py-16 md:py-20">
-      <h2 className="font-display text-2xl md:text-3xl text-center mb-12">
-        Education
-      </h2>
-      <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-16 max-w-2xl mx-auto">
-        {education.map((item) => (
-          <div key={item.school} className="flex items-center gap-5">
-            <div className="h-14 w-14 rounded-lg bg-secondary flex items-center justify-center overflow-hidden shrink-0 grayscale hover:grayscale-0 transition-all duration-300">
-              <img
-                src={item.logo}
-                alt={item.school}
-                className="h-full w-full object-contain p-1.5"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.nextElementSibling?.classList.remove("hidden");
-                }}
-              />
-              <GraduationCap className="hidden w-6 h-6 text-muted-foreground" />
-            </div>
-            <div>
-              <h3 className="font-display text-lg">{item.school}</h3>
-              <p className="text-sm text-muted-foreground">{item.degree}</p>
-              <p className="text-xs text-muted-foreground">{item.year}</p>
-            </div>
-          </div>
-        ))}
+    <section className="w-full py-20 md:py-24">
+      <div className="w-full px-6 md:px-10 lg:px-16">
+        <div className="mb-14 max-w-2xl">
+          <h2 className="font-display text-3xl md:text-4xl">Education</h2>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3 md:gap-8">
+          {education.map((item) => (
+            <a
+              key={item.school}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[220px] items-end rounded-[2rem] border border-border/60 bg-background/70 px-7 py-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(110,78,45,0.10)] md:min-h-[260px] md:px-8 md:py-10"
+            >
+              <div className="min-w-0">
+                <h3 className="font-display text-2xl font-semibold">{item.school}</h3>
+                <p className="mt-2 text-lg leading-relaxed text-muted-foreground">{item.degree}</p>
+                <p className="mt-3 text-sm font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                  {item.year}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );

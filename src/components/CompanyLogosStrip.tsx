@@ -11,7 +11,8 @@ const companies = [
 
 const CompanyLogosStrip = () => {
   return (
-    <section className="w-full border-y border-border/60 bg-secondary/20">
+    <section className="relative w-full overflow-hidden border-y border-border/60 bg-[linear-gradient(90deg,rgba(221,233,255,0.55),rgba(237,230,255,0.48),rgba(234,247,255,0.52))]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_50%,rgba(99,156,255,0.18),transparent_18%),radial-gradient(circle_at_88%_50%,rgba(230,117,210,0.16),transparent_18%)]" />
       <div className="w-full px-6 py-8 md:px-10 lg:px-16">
         <div className="flex items-center justify-between gap-8 overflow-x-auto pb-2 md:gap-10 md:pb-0 lg:gap-14">
           {companies.map((company) => (
