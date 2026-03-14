@@ -71,3 +71,19 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+# Contact form email setup
+
+This site includes a Cloudflare Pages Function at `/api/contact` that sends contact form submissions through Resend.
+
+Set these Cloudflare environment variables for your Pages project:
+
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+
+Recommended values:
+
+- `CONTACT_TO_EMAIL=kat@scariot.fr`
+- `CONTACT_FROM_EMAIL` should be a verified sender/domain in Resend, for example `website@yourdomain.com`
+
+For local development with Wrangler, you can also add them as secrets or environment variables before testing the function.

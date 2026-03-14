@@ -93,7 +93,7 @@ const ExperienceSection = () => {
         {companies.map((company) => (
           <div
             key={company.name}
-            className="grid gap-6 border-b border-border/70 py-8 md:grid-cols-[180px_1fr_auto] md:gap-10 md:py-10"
+            className="grid items-start gap-6 border-b border-border/70 py-8 md:grid-cols-[190px_minmax(0,1fr)_170px] md:gap-10 md:py-10"
           >
             <div className="space-y-5">
               {company.url ? (
@@ -144,7 +144,7 @@ const ExperienceSection = () => {
                 </div>
               </div>
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 max-w-4xl">
               <div>
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                   Results
@@ -159,7 +159,7 @@ const ExperienceSection = () => {
                 </ul>
               </div>
             </div>
-            <div className="md:text-right">
+            <div className="md:justify-self-end md:text-right">
               <span className="text-sm font-medium text-muted-foreground">{company.years}</span>
             </div>
           </div>

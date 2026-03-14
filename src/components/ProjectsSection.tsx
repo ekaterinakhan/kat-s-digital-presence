@@ -32,20 +32,20 @@ const ProjectsSection = () => {
     <section className="py-16 md:py-20">
       <div className="container">
         <div className="mb-12 max-w-2xl">
-          <h2 className="font-display section-title text-2xl md:text-3xl">Projects</h2>
+          <h2 className="font-display section-title text-3xl md:text-4xl">Projects</h2>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid items-stretch gap-6 lg:grid-cols-3">
           {projects.map((project) => (
             <a
               key={project.title}
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group section-panel relative flex min-h-[360px] flex-col overflow-hidden rounded-[2rem] p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[hsl(324_42%_74%)] hover:shadow-[0_26px_70px_rgba(75,45,110,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:min-h-[400px] md:p-8"
+              className="group section-panel relative flex min-h-[340px] flex-col overflow-hidden rounded-[2rem] p-7 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[hsl(324_42%_74%)] hover:shadow-[0_26px_70px_rgba(75,45,110,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:min-h-[360px] md:p-8 lg:min-h-[380px]"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,173,112,0.26),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(237,125,198,0.22),transparent_28%),radial-gradient(circle_at_center,rgba(126,116,255,0.16),transparent_44%),radial-gradient(circle_at_80%_80%,rgba(97,226,255,0.12),transparent_24%)] opacity-75 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative flex h-full flex-col">
-                <h3 className="font-display mb-2 text-[2rem] font-semibold leading-tight tracking-[-0.05em]">
+                <h3 className="font-display mb-2 text-[2rem] font-semibold leading-tight tracking-[-0.04em]">
                   {project.title}
                 </h3>
                 <p className="mb-6 text-base font-medium leading-snug text-muted-foreground">

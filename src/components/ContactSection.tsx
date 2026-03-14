@@ -13,6 +13,7 @@ type FormState = {
   subject: string;
   message: string;
   captcha: string;
+  company: string;
 };
 
 type CaptchaChallenge = {
@@ -36,19 +37,25 @@ const emptyForm = (): FormState => ({
   subject: "",
   message: "",
   captcha: "",
+  company: "",
 });
 
 const ContactSection = () => {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [captchaChallenge, setCaptchaChallenge] = useState<CaptchaChallenge>(createCaptchaChallenge);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const resetForm = () => {
     setForm(emptyForm());
     setCaptchaChallenge(createCaptchaChallenge());
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
 
     if (!form.fullName || !form.email || !form.subject || !form.message || !form.captcha) {
       toast.error("Please complete all fields before sending your request.");
@@ -67,26 +74,45 @@ const ContactSection = () => {
       return;
     }
 
-    const mailtoSubject = encodeURIComponent(`[Website inquiry] ${form.subject}`);
-    const mailtoBody = encodeURIComponent(
-      [
-        `Full name: ${form.fullName}`,
-        `Email: ${form.email}`,
-        "",
-        form.message,
-      ].join("\n"),
-    );
+    try {
+      setIsSubmitting(true);
 
-    window.location.href = `mailto:kat@scariot.fr?subject=${mailtoSubject}&body=${mailtoBody}`;
-    toast.success("Your email draft is opening.");
-    resetForm();
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+          company: form.company,
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+
+      if (!response.ok) {
+        toast.error(payload?.error ?? "Something went wrong while sending your message.");
+        return;
+      }
+
+      toast.success("Your message has been sent.");
+      resetForm();
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to send your message right now. Please try again shortly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section id="contact" className="w-full py-20 md:py-24">
-      <div className="w-full px-6 md:px-10 lg:px-16">
-        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-          <div className="max-w-xl">
+      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-10 lg:px-16">
+        <div className="grid gap-8 lg:grid-cols-[minmax(300px,0.7fr)_minmax(0,0.95fr)] lg:items-start lg:gap-10">
+          <div className="max-w-lg">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-accent">Contact</p>
             <h2 className="font-display mb-5 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] md:text-5xl">
               Let’s talk about growth, operations, or a potential collaboration.
@@ -108,7 +134,20 @@ const ContactSection = () => {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="section-panel mesh-glow p-6 md:p-8">
+          <form
+            onSubmit={handleSubmit}
+            className="section-panel mesh-glow w-full max-w-[920px] justify-self-end p-6 md:p-8"
+          >
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={form.company}
+              onChange={(event) => setForm((current) => ({ ...current, company: event.target.value }))}
+              className="hidden"
+              aria-hidden="true"
+            />
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="fullName">Full name</Label>
@@ -181,9 +220,9 @@ const ContactSection = () => {
               </div>
 
               <div className="flex items-end md:justify-end">
-                <Button type="submit" size="lg" className="h-12 w-full rounded-full md:w-auto">
+                <Button type="submit" size="lg" disabled={isSubmitting} className="h-12 w-full rounded-full md:w-auto">
                   <Mail className="h-4 w-4" />
-                  Send message
+                  {isSubmitting ? "Sending..." : "Send message"}
                 </Button>
               </div>
             </div>
