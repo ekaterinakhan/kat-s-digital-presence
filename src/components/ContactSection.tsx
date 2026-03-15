@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Mail } from "lucide-react";
+import { CiInstagram, CiLinkedin } from "react-icons/ci";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -200,18 +201,18 @@ const ContactSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="inline-flex items-center justify-center transition-transform duration-200 hover:scale-105"
+                className="inline-flex items-center justify-center text-foreground transition-transform duration-200 hover:scale-105 hover:text-primary"
               >
-                <img src="/linkedin.png" alt="" className="h-12 w-12 object-contain" />
+                <CiLinkedin className="h-12 w-12" />
               </a>
               <a
                 href="https://www.instagram.com/ekaterinakhan_/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="inline-flex items-center justify-center transition-transform duration-200 hover:scale-105"
+                className="inline-flex items-center justify-center text-foreground transition-transform duration-200 hover:scale-105 hover:text-primary"
               >
-                <img src="/instagram.png" alt="" className="h-12 w-12 object-contain" />
+                <CiInstagram className="h-12 w-12" />
               </a>
             </div>
           </div>
