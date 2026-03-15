@@ -19,10 +19,10 @@ const companies = [
     logo: "/voggt.png",
     url: "https://voggt.com/",
     role: "Regional Commercial Manager",
-    location: "Paris, France",
-    years: "2022 - 2023",
+    location: "Paris",
+    years: "Oct 2023 - Sep 2024",
     points: [
-      "Supported marketplace growth for a live shopping platform focused on collectibles.",
+      "Supported marketplace growth for Voggt, a live shopping platform focused on collectibles that was later acquired by Fanatics.",
       "Worked on seller acquisition, supply growth, and operational scaling across the marketplace.",
       "Partnered closely with creators, collectors, and internal teams to strengthen platform growth.",
     ],
@@ -57,8 +57,8 @@ const companies = [
     name: "Rocket Internet / ZenRooms",
     logo: "/rocketinternet.png",
     role: "Operations Manager",
-    location: "Bangkok, Thailand",
-    years: "2016 - 2017",
+    location: "Bangkok",
+    years: "May 2016 - Feb 2017",
     points: [
       "Worked on operational scaling and international expansion initiatives in fast-growth markets.",
       "Supported market launch execution, local operations, and partnership development.",
@@ -70,8 +70,8 @@ const companies = [
     logo: "/kpmg.png",
     url: "https://kpmg.com/xx/en.html",
     role: "Auditor",
-    location: "Saint Petersburg, Russia",
-    years: "2014 - 2016",
+    location: "Saint Petersburg",
+    years: "Aug 2011 - Oct 2014",
     points: [
       "Worked on strategy and operational consulting projects for corporate clients.",
       "Focused on financial analysis, market research, and business process improvement.",
@@ -83,12 +83,12 @@ const companies = [
 const ExperienceSection = () => {
   return (
     <section className="container py-16 md:py-20">
-      <div className="mb-12 max-w-2xl">
-        <h2 className="font-display text-2xl md:text-3xl mb-4 leading-snug">Experience</h2>
-        <p className="text-left text-muted-foreground text-lg leading-relaxed">
-          10+ years of experience building and scaling international tech companies across Europe.
-        </p>
-      </div>
+        <div className="mb-12 max-w-2xl">
+          <h2 className="font-display text-2xl md:text-3xl mb-4 leading-snug">Experience</h2>
+          <p className="text-left text-muted-foreground text-lg leading-relaxed">
+          10+ years of experience building and scaling international tech companies across Europe and Asia.
+          </p>
+        </div>
       <div className="grid gap-0">
         {companies.map((company) => (
           <div

@@ -11,19 +11,19 @@ const companies = [
 
 const CompanyLogosStrip = () => {
   return (
-    <section className="relative w-full overflow-hidden border-y border-border/60 bg-[linear-gradient(90deg,rgba(221,233,255,0.55),rgba(237,230,255,0.48),rgba(234,247,255,0.52))]">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_50%,rgba(99,156,255,0.18),transparent_18%),radial-gradient(circle_at_88%_50%,rgba(230,117,210,0.16),transparent_18%)]" />
-      <div className="w-full px-6 py-8 md:px-10 lg:px-16">
+    <section className="relative w-full overflow-hidden border-y border-border/60 bg-[rgba(255,255,255,0.24)]">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(9,63,180,0.04),rgba(255,255,255,0.12),rgba(9,63,180,0.04))]" />
+      <div className="w-full px-6 py-7 md:px-10 md:py-8 lg:px-16">
         <div className="flex items-center justify-between gap-8 overflow-x-auto pb-2 md:gap-10 md:pb-0 lg:gap-14">
           {companies.map((company) => (
             <div
               key={company.name}
-              className="flex h-24 min-w-[150px] shrink-0 items-center justify-center grayscale opacity-65 transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-28 md:min-w-[170px] lg:h-32 lg:min-w-[190px]"
+              className="flex h-20 min-w-[140px] shrink-0 items-center justify-center grayscale-[25%] opacity-75 transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-24 md:min-w-[160px] lg:h-28 lg:min-w-[180px]"
             >
               <img
                 src={company.logo}
                 alt={company.name}
-                className="max-h-14 w-full object-contain md:max-h-16 lg:max-h-20"
+                className="max-h-12 w-full object-contain md:max-h-14 lg:max-h-16"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
                   e.currentTarget.nextElementSibling?.classList.remove("hidden");

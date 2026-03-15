@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import { Mail, RefreshCw } from "lucide-react";
-import LinkedInIcon from "@/components/LinkedInIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -121,15 +120,24 @@ const ContactSection = () => {
               Send a message directly through the form and I will get back to you personally.
             </p>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap gap-4">
               <a
                 href="https://www.linkedin.com/in/khan-ekaterina/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                aria-label="LinkedIn"
+                className="inline-flex items-center justify-center transition-transform duration-200 hover:scale-105"
               >
-                <LinkedInIcon className="h-5 w-5" />
-                LinkedIn
+                <img src="/linkedin.png" alt="" className="h-12 w-12 object-contain" />
+              </a>
+              <a
+                href="https://www.instagram.com/ekaterinakhan_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex items-center justify-center transition-transform duration-200 hover:scale-105"
+              >
+                <img src="/instagram.png" alt="" className="h-12 w-12 object-contain" />
               </a>
             </div>
           </div>

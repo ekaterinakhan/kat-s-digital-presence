@@ -3,28 +3,25 @@ import { User } from "lucide-react";
 const HeroSection = () => {
   return (
     <section className="container py-12 md:py-18">
-      <div className="relative overflow-hidden py-10 md:py-12">
-        <div className="absolute left-[-3rem] top-[5rem] h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(9,63,180,0.22),transparent_65%)] blur-2xl" />
-        <div className="absolute right-[1rem] top-[-1rem] h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(75,128,255,0.16),transparent_62%)] blur-3xl" />
-
+      <div className="py-6 md:py-8">
         <div className="mb-8 flex flex-wrap items-center gap-3">
-          <span className="rounded-full border border-border/80 bg-background/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          <span className="rounded-full border border-[rgba(9,63,180,0.14)] bg-[rgba(9,63,180,0.08)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-foreground">
             UK - France based
           </span>
-          <span className="rounded-full bg-[linear-gradient(90deg,rgba(9,63,180,0.14),rgba(75,128,255,0.12),rgba(148,200,255,0.14))] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-foreground">
+          <span className="rounded-full border border-[rgba(74,108,174,0.16)] bg-[rgba(107,138,204,0.11)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-foreground">
             Available for advisory work
           </span>
-          <span className="rounded-full border border-border/80 bg-background/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          <span className="rounded-full border border-[rgba(58,113,154,0.16)] bg-[rgba(112,172,199,0.1)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-foreground">
             Mentoring
           </span>
-          <span className="rounded-full border border-border/80 bg-background/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          <span className="rounded-full border border-[rgba(93,107,168,0.16)] bg-[rgba(138,147,209,0.1)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-foreground">
             Entrepreneur
           </span>
         </div>
 
         <div className="relative flex flex-col items-center gap-12 md:flex-row md:items-center md:gap-16">
           <div className="shrink-0">
-            <div className="mesh-glow flex h-56 w-56 items-center justify-center overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(34,24,66,0.12)] md:h-80 md:w-72 lg:h-[24rem] lg:w-[22rem]">
+            <div className="flex h-56 w-56 items-center justify-center overflow-hidden rounded-[2rem] md:h-80 md:w-72 lg:h-[24rem] lg:w-[22rem]">
               <img
                 src="/profile-photo.jpg"
                 alt="Ekaterina Khan"

@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="18" fill="#093FB4" />
-  <path
-    d="M19 47V17H25.2V29.9L37.4 17H45.4L33.2 30L46 47H38.2L28.5 34L25.2 37.5V47H19Z"
-    fill="#F8F6F0"
-  />
+  <rect width="64" height="64" rx="18" fill="#F7F5EE" />
+  <rect x="4" y="4" width="56" height="56" rx="14" stroke="#093FB4" stroke-opacity="0.16" />
+  <path d="M21 19V45" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M23 32H36" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M23 19H39" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M23 45H39" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M44 19V45" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M44 32L54 19" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
+  <path d="M44 32L54 45" stroke="#093FB4" stroke-width="3.2" stroke-linecap="round" />
 </svg>
