@@ -12,6 +12,7 @@ type Env = {
   CONTACT_TO_EMAIL: string;
   CONTACT_FROM_EMAIL: string;
   TURNSTILE_SECRET_KEY: string;
+  VITE_TURNSTILE_SITE_KEY: string;
 };
 
 const json = (body: Record<string, string>, status = 200) =>
@@ -23,6 +24,14 @@ const json = (body: Record<string, string>, status = 200) =>
   });
 
 const sanitize = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+
+export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+  if (!env.VITE_TURNSTILE_SITE_KEY) {
+    return json({ error: "Turnstile site key is not configured yet." }, 500);
+  }
+
+  return json({ siteKey: env.VITE_TURNSTILE_SITE_KEY });
+};
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   let payload: ContactRequest;

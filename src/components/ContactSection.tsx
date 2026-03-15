@@ -23,10 +23,11 @@ const emptyForm = (): FormState => ({
 });
 
 const ContactSection = () => {
-  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   const [form, setForm] = useState<FormState>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState("");
+  const [turnstileReady, setTurnstileReady] = useState(false);
   const widgetContainerRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
 
@@ -37,6 +38,39 @@ const ContactSection = () => {
       window.turnstile.reset(widgetIdRef.current);
     }
   };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadSiteKey = async () => {
+      try {
+        const response = await fetch("/api/contact");
+        const payload = (await response.json().catch(() => null)) as
+          | { siteKey?: string; error?: string }
+          | null;
+
+        if (!response.ok || !payload?.siteKey) {
+          throw new Error(payload?.error ?? "Turnstile site key is unavailable.");
+        }
+
+        if (!cancelled) {
+          setTurnstileSiteKey(payload.siteKey);
+          setTurnstileReady(true);
+        }
+      } catch (error) {
+        console.error(error);
+        if (!cancelled) {
+          setTurnstileReady(true);
+        }
+      }
+    };
+
+    loadSiteKey();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!turnstileSiteKey || !widgetContainerRef.current) {
@@ -251,9 +285,11 @@ const ContactSection = () => {
                 <Label>Security check</Label>
                 {turnstileSiteKey ? (
                   <div ref={widgetContainerRef} className="min-h-[68px]" />
+                ) : !turnstileReady ? (
+                  <p className="text-sm text-muted-foreground">Loading security check...</p>
                 ) : (
                   <p className="text-sm text-muted-foreground">
-                    Add `VITE_TURNSTILE_SITE_KEY` in Cloudflare Pages to enable Turnstile.
+                    Turnstile is not configured yet. Please check Cloudflare Pages settings.
                   </p>
                 )}
               </div>
