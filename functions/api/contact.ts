@@ -4,12 +4,14 @@ type ContactRequest = {
   subject?: string;
   message?: string;
   company?: string;
+  turnstileToken?: string;
 };
 
 type Env = {
   RESEND_API_KEY: string;
   CONTACT_TO_EMAIL: string;
   CONTACT_FROM_EMAIL: string;
+  TURNSTILE_SECRET_KEY: string;
 };
 
 const json = (body: Record<string, string>, status = 200) =>
@@ -36,6 +38,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const subject = sanitize(payload.subject);
   const message = sanitize(payload.message);
   const company = sanitize(payload.company);
+  const turnstileToken = sanitize(payload.turnstileToken);
 
   if (company) {
     return json({ ok: "Message accepted." });
@@ -47,6 +50,40 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   if (!/\S+@\S+\.\S+/.test(email)) {
     return json({ error: "Please provide a valid email address." }, 400);
+  }
+
+  if (!turnstileToken) {
+    return json({ error: "Captcha verification is required." }, 400);
+  }
+
+  if (!env.TURNSTILE_SECRET_KEY) {
+    return json({ error: "Captcha is not configured yet." }, 500);
+  }
+
+  const ipAddress =
+    request.headers.get("CF-Connecting-IP") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    undefined;
+
+  const turnstileResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      secret: env.TURNSTILE_SECRET_KEY,
+      response: turnstileToken,
+      remoteip: ipAddress,
+    }),
+  });
+
+  const turnstilePayload = (await turnstileResponse.json().catch(() => null)) as
+    | { success?: boolean; "error-codes"?: string[] }
+    | null;
+
+  if (!turnstilePayload?.success) {
+    console.error("Turnstile verification failed:", turnstilePayload?.["error-codes"]);
+    return json({ error: "Captcha verification failed. Please try again." }, 400);
   }
 
   if (!env.RESEND_API_KEY || !env.CONTACT_TO_EMAIL || !env.CONTACT_FROM_EMAIL) {

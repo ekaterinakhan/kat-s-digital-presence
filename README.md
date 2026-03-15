@@ -80,10 +80,14 @@ Set these Cloudflare environment variables for your Pages project:
 - `RESEND_API_KEY`
 - `CONTACT_TO_EMAIL`
 - `CONTACT_FROM_EMAIL`
+- `TURNSTILE_SECRET_KEY`
+- `VITE_TURNSTILE_SITE_KEY`
 
 Recommended values:
 
 - `CONTACT_TO_EMAIL=kat@scariot.fr`
 - `CONTACT_FROM_EMAIL` should be a verified sender/domain in Resend, for example `website@yourdomain.com`
+- `TURNSTILE_SECRET_KEY` should be your Cloudflare Turnstile secret key
+- `VITE_TURNSTILE_SITE_KEY` should be your Cloudflare Turnstile site key
 
 For local development with Wrangler, you can also add them as secrets or environment variables before testing the function.

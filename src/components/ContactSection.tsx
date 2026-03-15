@@ -1,5 +1,5 @@
-import { FormEvent, useState } from "react";
-import { Mail, RefreshCw } from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,23 +11,7 @@ type FormState = {
   email: string;
   subject: string;
   message: string;
-  captcha: string;
   company: string;
-};
-
-type CaptchaChallenge = {
-  answer: number;
-  label: string;
-};
-
-const createCaptchaChallenge = (): CaptchaChallenge => {
-  const first = Math.floor(Math.random() * 7) + 2;
-  const second = Math.floor(Math.random() * 6) + 3;
-
-  return {
-    answer: first + second,
-    label: `What is ${first} + ${second}?`,
-  };
 };
 
 const emptyForm = (): FormState => ({
@@ -35,19 +19,76 @@ const emptyForm = (): FormState => ({
   email: "",
   subject: "",
   message: "",
-  captcha: "",
   company: "",
 });
 
 const ContactSection = () => {
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   const [form, setForm] = useState<FormState>(emptyForm);
-  const [captchaChallenge, setCaptchaChallenge] = useState<CaptchaChallenge>(createCaptchaChallenge);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const widgetContainerRef = useRef<HTMLDivElement | null>(null);
+  const widgetIdRef = useRef<string | null>(null);
 
   const resetForm = () => {
     setForm(emptyForm());
-    setCaptchaChallenge(createCaptchaChallenge());
+    setTurnstileToken("");
+    if (window.turnstile && widgetIdRef.current) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
   };
+
+  useEffect(() => {
+    if (!turnstileSiteKey || !widgetContainerRef.current) {
+      return;
+    }
+
+    const renderWidget = () => {
+      if (!window.turnstile || !widgetContainerRef.current || widgetIdRef.current) {
+        return;
+      }
+
+      widgetIdRef.current = window.turnstile.render(widgetContainerRef.current, {
+        sitekey: turnstileSiteKey,
+        theme: "light",
+        size: "flexible",
+        callback: (token: string) => setTurnstileToken(token),
+        "expired-callback": () => {
+          setTurnstileToken("");
+          if (widgetIdRef.current) {
+            window.turnstile?.reset(widgetIdRef.current);
+          }
+        },
+        "error-callback": () => {
+          setTurnstileToken("");
+          toast.error("Captcha failed to load. Please refresh and try again.");
+        },
+      });
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+      return;
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      'script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]',
+    );
+
+    if (existingScript) {
+      existingScript.addEventListener("load", renderWidget, { once: true });
+      return () => existingScript.removeEventListener("load", renderWidget);
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    script.async = true;
+    script.defer = true;
+    script.addEventListener("load", renderWidget, { once: true });
+    document.head.appendChild(script);
+
+    return () => script.removeEventListener("load", renderWidget);
+  }, [turnstileSiteKey]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -56,7 +97,7 @@ const ContactSection = () => {
       return;
     }
 
-    if (!form.fullName || !form.email || !form.subject || !form.message || !form.captcha) {
+    if (!form.fullName || !form.email || !form.subject || !form.message) {
       toast.error("Please complete all fields before sending your request.");
       return;
     }
@@ -66,10 +107,8 @@ const ContactSection = () => {
       return;
     }
 
-    if (Number(form.captcha) !== captchaChallenge.answer) {
-      toast.error("Captcha answer is incorrect. Please try again.");
-      setCaptchaChallenge(createCaptchaChallenge());
-      setForm((current) => ({ ...current, captcha: "" }));
+    if (!turnstileToken) {
+      toast.error("Please complete the security check before sending your request.");
       return;
     }
 
@@ -87,6 +126,7 @@ const ContactSection = () => {
           subject: form.subject,
           message: form.message,
           company: form.company,
+          turnstileToken,
         }),
       });
 
@@ -161,6 +201,7 @@ const ContactSection = () => {
                 <Label htmlFor="fullName">Full name</Label>
                 <Input
                   id="fullName"
+                  required
                   value={form.fullName}
                   onChange={(event) => setForm((current) => ({ ...current, fullName: event.target.value }))}
                   placeholder="Your full name"
@@ -173,6 +214,8 @@ const ContactSection = () => {
                 <Input
                   id="email"
                   type="email"
+                  required
+                  autoComplete="email"
                   value={form.email}
                   onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
                   placeholder="you@example.com"
@@ -184,6 +227,7 @@ const ContactSection = () => {
                 <Label htmlFor="subject">Subject</Label>
                 <Input
                   id="subject"
+                  required
                   value={form.subject}
                   onChange={(event) => setForm((current) => ({ ...current, subject: event.target.value }))}
                   placeholder="How can I help?"
@@ -195,6 +239,7 @@ const ContactSection = () => {
                 <Label htmlFor="message">Message</Label>
                 <Textarea
                   id="message"
+                  required
                   value={form.message}
                   onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))}
                   placeholder="Tell me a little about your request."
@@ -202,29 +247,15 @@ const ContactSection = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="captcha">Captcha</Label>
-                <div className="flex items-center gap-3">
-                  <Input
-                    id="captcha"
-                    inputMode="numeric"
-                    value={form.captcha}
-                    onChange={(event) => setForm((current) => ({ ...current, captcha: event.target.value }))}
-                    placeholder={captchaChallenge.label}
-                    className="h-12 rounded-2xl bg-background/90"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="h-12 w-12 rounded-2xl"
-                    onClick={() => setCaptchaChallenge(createCaptchaChallenge())}
-                    aria-label="Refresh captcha"
-                  >
-                    <RefreshCw className="h-4 w-4" />
-                  </Button>
-                </div>
-                <p className="text-sm text-muted-foreground">{captchaChallenge.label}</p>
+              <div className="space-y-2 md:col-span-2">
+                <Label>Security check</Label>
+                {turnstileSiteKey ? (
+                  <div ref={widgetContainerRef} className="min-h-[68px]" />
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Add `VITE_TURNSTILE_SITE_KEY` in Cloudflare Pages to enable Turnstile.
+                  </p>
+                )}
               </div>
 
               <div className="flex items-end md:justify-end">
